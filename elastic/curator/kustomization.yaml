@@ -5,7 +5,7 @@ commonLabels:
   component: es-curator
   version: v5.8.1
 commonAnnotations:
-  kustomization-base-url: https://gitlab.com/4ops/kustomizations/elastic/curator
+  kustomization-base-url: https://github.com/4ops/kustomizations/elastic/curator
 resources:
   - configmaps/config.yaml
   - configmaps/actions.yaml
