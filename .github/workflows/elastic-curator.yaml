@@ -15,21 +15,15 @@ jobs:
       env:
         BASEURL: https://storage.googleapis.com/kubernetes-release/release
       run: |
-        if [ -f ./kubectl ]; then
-          export KUBECTL="${PWD}/kubectl"
-        else
-          if kubectl version --client --short &> /dev/null; then
-            export RELEASE=$(curl -s "${BASEURL}/stable.txt")
-            curl -LO "${BASEURL}/${RELEASE}/bin/linux/amd64/kubectl" || exit 42
-            export KUBECTL="${PWD}/kubectl"
-          else
-            export KUBECTL=$(which kubectl)
-          fi
+        if ! kubectl version --client --short &> /dev/null; then
+          export RELEASE=$(curl -s "${BASEURL}/stable.txt")
+          curl -LO "${BASEURL}/${RELEASE}/bin/linux/amd64/kubectl" || exit 42
+          chmod +x ./kubectl
+          mv ./kubectl /usr/local/bin/kubectl
         fi
 
-        test -x "${KUBECTL}" || chmod +x "${KUBECTL}"
-        $KUBECTL version --short --client
+        kubectl version --short --client
 
     - name: Try to kustomize
       run: |
-        $KUBECTL kustomize elastic/curator
+        kubectl kustomize elastic/curator
