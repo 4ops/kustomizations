@@ -14,13 +14,6 @@ configMapGenerator:
   - name: env
     literals:
       - CLIENT_HOST=elasticsearch
-      - CLIENT_PORT=9200
-      - CLIENT_USE_SSL=False
-      - CLIENT_SSL_NO_VALIDATE=False
-      - CLIENT_TIMEOUT=10
-      - CLIENT_MASTER_ONLY=False
-      - LOGGING_LOGLEVEL=INFO
-      - LOGGING_LOGFORMAT=default
 generatorOptions:
   disableNameSuffixHash: true
 images:

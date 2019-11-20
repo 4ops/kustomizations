@@ -8,19 +8,19 @@ data:
     client:
       hosts:
         - ${CLIENT_HOST}
-      port: ${CLIENT_PORT}
+      port: ${CLIENT_PORT:9200}
       url_prefix: ${CLIENT_URL_PREFIX}
-      use_ssl: ${CLIENT_USE_SSL}
+      use_ssl: ${CLIENT_USE_SSL:False}
       certificate: ${CLIENT_CERTIFICATE}
       client_cert: ${CLIENT_CLIENT_CERT}
       client_key: ${CLIENT_CLIENT_KEY}
-      ssl_no_validate: ${CLIENT_SSL_NO_VALIDATE}
+      ssl_no_validate: ${CLIENT_SSL_NO_VALIDATE:False}
       http_auth: ${CLIENT_HTTP_AUTH}
-      timeout: ${CLIENT_TIMEOUT}
-      master_only: ${CLIENT_MASTER_ONLY}
+      timeout: ${CLIENT_TIMEOUT:30}
+      master_only: ${CLIENT_MASTER_ONLY:False}
 
     logging:
-      loglevel: ${LOGGING_LOGLEVEL}
+      loglevel: ${LOGGING_LOGLEVEL:INFO}
       logfile: ${LOGGING_LOGFILE}
-      logformat: ${LOGGING_LOGFORMAT}
+      logformat: ${LOGGING_LOGFORMAT:default}
       blacklist: ['elasticsearch', 'urllib3']
