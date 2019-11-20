@@ -15,4 +15,4 @@ jobs:
         chmod +x kubectl
     - name: Kustomize and check syntax
       run: |
-        ./kubectl kustomize elastic/curator | ./kubectl apply --dry-run -f
+        ./kubectl kustomize elastic/curator | ./kubectl apply --dry-run -f -
