@@ -21,7 +21,7 @@ jobs:
           if kubectl version --client --short &> /dev/null; then
             export RELEASE=$(curl -s "${BASEURL}/stable.txt")
             curl -LO "${BASEURL}/${RELEASE}/bin/linux/amd64/kubectl" || exit 42
-            export "${PWD}/kubectl"
+            export KUBECTL="${PWD}/kubectl"
           else
             export KUBECTL=$(which kubectl)
           fi
