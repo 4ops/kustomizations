@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config
+data:
+  settings.yaml: |-
+    ---
+    client:
+      hosts:
+        - ${CLIENT_HOST}
+      port: ${CLIENT_PORT}
+      url_prefix: ${CLIENT_URL_PREFIX}
+      use_ssl: ${CLIENT_USE_SSL}
+      certificate: ${CLIENT_CERTIFICATE}
+      client_cert: ${CLIENT_CLIENT_CERT}
+      client_key: ${CLIENT_CLIENT_KEY}
+      ssl_no_validate: ${CLIENT_SSL_NO_VALIDATE}
+      http_auth: ${CLIENT_HTTP_AUTH}
+      timeout: ${CLIENT_TIMEOUT}
+      master_only: ${CLIENT_MASTER_ONLY}
+
+    logging:
+      loglevel: ${LOGGING_LOGLEVEL}
+      logfile: ${LOGGING_LOGFILE}
+      logformat: ${LOGGING_LOGFORMAT}
+      blacklist: ['elasticsearch', 'urllib3']

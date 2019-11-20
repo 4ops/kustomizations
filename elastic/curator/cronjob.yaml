@@ -1,0 +1,30 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: cleanup
+spec:
+  schedule: 42 2 * * *
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: curator
+              image: es-curator
+              args: ["--config", "/curator/config/settings.yaml", "/curator/actions/cleanup.yaml"]
+              envFrom:
+                - configMapRef:
+                    name: env
+              volumeMounts:
+                - name: config
+                  mountPath: /curator/config
+                - name: actions
+                  mountPath: /curator/actions
+          volumes:
+            - name: config
+              configMap:
+                name: config
+            - name: actions
+              configMap:
+                name: actions
+          restartPolicy: OnFailure
