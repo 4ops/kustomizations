@@ -8,11 +8,28 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - name: Checkout SCM
+      uses: actions/checkout@v1
+
     - name: Install dependencies
+      env:
+        BASEURL: https://storage.googleapis.com/kubernetes-release/release
       run: |
-        curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
-        chmod +x kubectl
+        if [ -f ./kubectl ]; then
+          export KUBECTL="${PWD}/kubectl"
+        else
+          if kubectl version --client --short &> /dev/null; then
+            export RELEASE=$(curl -s "${BASEURL}/stable.txt")
+            curl -LO "${BASEURL}/${RELEASE}/bin/linux/amd64/kubectl" || exit 42
+            export "${PWD}/kubectl"
+          else
+            export KUBECTL=$(which kubectl)
+          fi
+        fi
+
+        test -x "${KUBECTL}" || chmod +x "${KUBECTL}"
+        $KUBECTL version --short --client
+
     - name: Try to kustomize
       run: |
-        ./kubectl kustomize elastic/curator
+        $KUBECTL kustomize elastic/curator
